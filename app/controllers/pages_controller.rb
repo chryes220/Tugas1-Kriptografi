@@ -14,12 +14,16 @@ class PagesController < ApplicationController
     case cipher
       when "standard-vigenere"
         cipher_class = StandardVigenere.instance
-        if act == "encrypt"
-          result = cipher_class.encrypt(message, key)
-        else
-          result = cipher_class.decrypt(message, key)
-        end
+      when "extended-vigenere"
+        cipher_class = ExtendedVigenere.instance
+
       # ...
+    end
+
+    if act == "encrypt"
+      result = cipher_class.encrypt(message, key)
+    else
+      result = cipher_class.decrypt(message, key)
     end
 
     render json: result
