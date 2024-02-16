@@ -1,6 +1,10 @@
 <h1>Cryptographers</h1>
 
 <form action="/submit" method="post" class="flex-col">
+  <input type="hidden" name="authenticity_token" value="<%=
+  form_authenticity_token
+  %>">
+  
   <div class="flex-row">
     <label for="act">Action:</label>
     <select id="act" name="act">
@@ -35,3 +39,8 @@
 
   <input type="submit" value="Submit">
 </form>
+
+<div id="result" class="flex-row">
+  <label for="result">Result:</label>
+  <span id="result-text">N/A</span>
+</div>
