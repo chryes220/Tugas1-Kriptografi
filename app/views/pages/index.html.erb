@@ -1,0 +1,37 @@
+<h1>Cryptographers</h1>
+
+<form action="/submit" method="post" class="flex-col">
+  <div class="flex-row">
+    <label for="action">Action:</label>
+    <select id="action">
+      <option value="encrypt">Encrypt</option>
+      <option value="decrypt">Decrypt</option>
+    </select>
+  </div>
+  
+  <div class="flex-row">
+    <label for="cipher">Cipher:</label>
+    <select id="cipher">
+      <option value="standard-vigenere">Standard Vigenere</option>
+      <option value="auto-key-vigenere">Auto-Key Vigenere</option>
+      <option value="extended-vigenere">Extended Vigenere</option>
+      <option value="playfair">Playfair</option>
+      <option value="affine">Affine</option>
+      <option value="hill">Hill</option>
+      <option value="super-encryption">Super Encryption</option>
+      <option value="enigma">Enigma</option>
+    </select>
+  </div>
+
+  <div class="flex-row">
+    <label for="message">Message:</label>
+    <textarea id="message" name="message"></textarea>
+  </div>
+
+  <div class="flex-row">
+    <label for="key">Key:</label>
+    <input type="text" id="key" name="key">
+  </div>
+
+  <input type="submit" value="Submit">
+</form>
