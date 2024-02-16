@@ -11,6 +11,13 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const form = e.target;
   const formData = new FormData(form);
 
+  //lakukan validasi masukan
+  const validationResult = validateInput(formData)
+  if(!validationResult.status){
+    alert(validationResult.message)
+    return
+  }
+
   fetch("/submit", {
     method: "POST",
     headers: {
@@ -28,6 +35,32 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       console.error("Error:", error);
     });
 });
+
+function validateInput(formData){
+  const validationResult = {status:false,message:""}
+  if(formData.get("cipher")==="playfair"){
+    //pastiin key nya panjangnya 25, tiap karakter berupa karakter alfabet yang unik, dan gak boleh ada J?
+    const key = formData.get("key").toLowerCase()
+    if(key.length!==25){
+      validationResult.message += "Key for Playfair Cipher need at least 25 characters\n"
+    }
+    if(!(/^[a-z]+$/.test(key))){
+      validationResult.message += "Key must be alphabet\n"
+    }
+    if(new Set(key).size !== key.length){
+      validationResult.message += "Each character in key must be unique\n"
+    }
+    if(key.indexOf("j") > -1){
+      validationResult.message += "J cannot be included in key\n"
+    }
+
+    //kalau message kosong, berarti lolos tes
+    if(!validationResult.message.length){
+      validationResult.status = true
+    }
+  }
+  return validationResult
+}
 
 const inputTypeElement = document.querySelector("#inputType")
 const fileInput = document.querySelector("#fileInput")

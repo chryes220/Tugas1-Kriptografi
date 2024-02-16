@@ -1,6 +1,7 @@
 require_relative "../services/standard_vigenere.rb"
 require_relative "../services/autokey_viginere.rb"
 require_relative "../services/extended_vigenere.rb"
+require_relative "../services/playfair.rb"
 
 class PagesController < ApplicationController
   def index
@@ -22,7 +23,8 @@ class PagesController < ApplicationController
         cipher_class = AutokeyViginere.instance
       when "extended-vigenere"
         cipher_class = ExtendedVigenere.instance
-
+      when "playfair"
+        cipher_class = Playfair.instance
       # ...
     end
     puts "halo"
