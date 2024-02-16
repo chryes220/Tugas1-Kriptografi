@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.result {
+  margin: 3em;
+}
+
 label {
   width: 30%;
 }
@@ -25,8 +29,4 @@ textarea {
 form {
   margin: 0 3em;
   gap: 1em;
-}
-
-#result {
-  margin: 3em;
 }

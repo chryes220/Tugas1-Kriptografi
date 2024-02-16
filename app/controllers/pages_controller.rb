@@ -9,7 +9,7 @@ class PagesController < ApplicationController
     key = params[:key]
 
     cipher_class = nil
-    result = ""
+    result = {}
 
     case cipher
       when "standard-vigenere"
@@ -22,7 +22,7 @@ class PagesController < ApplicationController
       # ...
     end
 
-    render json: { result: result }
+    render json: result
 
   end
 
