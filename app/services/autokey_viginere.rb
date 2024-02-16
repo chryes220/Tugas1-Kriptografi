@@ -1,5 +1,5 @@
 require 'singleton'
-require_relative 'cipher'
+require_relative 'ciphers'
 
 class AutokeyViginere
   include Ciphers
