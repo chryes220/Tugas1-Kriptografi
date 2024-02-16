@@ -21,6 +21,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     .then((response) => response.json())
     .then((data) => {
       document.getElementById("result-text").innerText = data.result;
+      document.getElementById("result-base64-text").innerText =
+        data.result_base64;
     })
     .catch((error) => {
       console.error("Error:", error);

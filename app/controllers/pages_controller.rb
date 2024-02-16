@@ -9,22 +9,26 @@ class PagesController < ApplicationController
     key = params[:key]
 
     cipher_class = nil
-    result = ""
+    result = {}
 
     case cipher
       when "standard-vigenere"
         cipher_class = StandardVigenere.instance
       when "auto-key-vigenere"
         cipher_class = nil
+      when "extended-vigenere"
+        cipher_class = ExtendedVigenere.instance
+
+      # ...
     end
+    
     if act == "encrypt"
       result = cipher_class.encrypt(message, key)
     else
       result = cipher_class.decrypt(message, key)
     end
-      # ...
 
-    render json: { result: result }
+    render json: result
 
   end
 
