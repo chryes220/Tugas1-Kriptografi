@@ -22,10 +22,34 @@
       <option value="enigma">Enigma</option>
     </select>
   </div>
-
   <div class="flex-row">
-    <label for="message">Message:</label>
-    <textarea id="message" name="message"></textarea>
+    <label for="inputType">Input Type:</label>
+    <select id="inputType" onchange="changeInput()">
+      <option value="textInput">Text</option>
+      <option value="fileInput">File</option>
+    </select>
+  </div>
+  <div class="flex-col" id="textInput">
+    <div class="flex-row">
+      <label for="message">Message:</label>
+      <textarea id="message" name="message"></textarea>
+    </div>
+    <div class="flex-row-center">
+      <div class="radio">
+        <input type="radio" id="plain_input" name="input_style" value="plain">
+        <label for="plain_input">Plaintext</label>
+      </div>
+       <div class="radio">
+        <input type="radio" id="hex_input" name="input_style" value="base64">
+        <label for="hex_input">Base64</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-row" id="fileInput" style="display:none;">
+    <label for="file">File:</label>
+    <%# <input type="text"> %>
+    <input type="file" id="file">
   </div>
 
   <div class="flex-row">
@@ -35,3 +59,20 @@
 
   <input type="submit" value="Submit">
 </form>
+<%# Tampilin resultnya disini %>
+<script>
+const inputTypeElement = document.querySelector("#inputType")
+const fileInput = document.querySelector("#fileInput")
+const textInput = document.querySelector("#textInput")
+function changeInput(){
+  //change who to show
+  if(inputTypeElement.value==="fileInput"){
+    textInput.style.display = "none";
+    fileInput.style.display = "flex";
+  }
+  else{
+    textInput.style.display = "flex";
+    fileInput.style.display = "none";
+  }
+}
+</script>
