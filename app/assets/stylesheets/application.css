@@ -45,3 +45,7 @@ form {
   margin: 0 3em;
   gap: 1em;
 }
+
+#result {
+  margin: 3em;
+}

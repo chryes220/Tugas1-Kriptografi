@@ -1,18 +1,22 @@
 <h1>Cryptographers</h1>
 
 <form action="/submit" method="post" class="flex-col">
+  <input type="hidden" name="authenticity_token" value="<%=
+  form_authenticity_token
+  %>">
+  
   <div class="flex-row">
-    <label for="action">Action:</label>
-    <select id="action">
-      <option value="encrypt">Encrypt</option>
+    <label for="act">Action:</label>
+    <select id="act" name="act">
+      <option value="encrypt" selected>Encrypt</option>
       <option value="decrypt">Decrypt</option>
     </select>
   </div>
   
   <div class="flex-row">
     <label for="cipher">Cipher:</label>
-    <select id="cipher">
-      <option value="standard-vigenere">Standard Vigenere</option>
+    <select id="cipher" name="cipher">
+      <option value="standard-vigenere" selected>Standard Vigenere</option>
       <option value="auto-key-vigenere">Auto-Key Vigenere</option>
       <option value="extended-vigenere">Extended Vigenere</option>
       <option value="playfair">Playfair</option>
@@ -59,7 +63,10 @@
 
   <input type="submit" value="Submit">
 </form>
-<%# Tampilin resultnya disini %>
+<div id="result" class="flex-row">
+  <label for="result">Result:</label>
+  <span id="result-text">N/A</span>
+</div>
 <script>
 const inputTypeElement = document.querySelector("#inputType")
 const fileInput = document.querySelector("#fileInput")
@@ -76,3 +83,5 @@ function changeInput(){
   }
 }
 </script>
+
+
