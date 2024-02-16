@@ -28,3 +28,19 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       console.error("Error:", error);
     });
 });
+
+const inputTypeElement = document.querySelector("#inputType")
+const fileInput = document.querySelector("#fileInput")
+const textInput = document.querySelector("#textInput")
+
+document.querySelector("#inputType").onchange = function changeInput(){
+  //change who to show
+  if(inputTypeElement.value==="fileInput"){
+    textInput.style.display = "none";
+    fileInput.style.display = "flex";
+  }
+  else{
+    textInput.style.display = "flex";
+    fileInput.style.display = "none";
+  }
+}
