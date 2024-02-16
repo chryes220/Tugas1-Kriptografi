@@ -2,17 +2,17 @@
 
 <form action="/submit" method="post" class="flex-col">
   <div class="flex-row">
-    <label for="action">Action:</label>
-    <select id="action">
-      <option value="encrypt">Encrypt</option>
+    <label for="act">Action:</label>
+    <select id="act" name="act">
+      <option value="encrypt" selected>Encrypt</option>
       <option value="decrypt">Decrypt</option>
     </select>
   </div>
   
   <div class="flex-row">
     <label for="cipher">Cipher:</label>
-    <select id="cipher">
-      <option value="standard-vigenere">Standard Vigenere</option>
+    <select id="cipher" name="cipher">
+      <option value="standard-vigenere" selected>Standard Vigenere</option>
       <option value="auto-key-vigenere">Auto-Key Vigenere</option>
       <option value="extended-vigenere">Extended Vigenere</option>
       <option value="playfair">Playfair</option>
