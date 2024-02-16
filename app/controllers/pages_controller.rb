@@ -14,13 +14,15 @@ class PagesController < ApplicationController
     case cipher
       when "standard-vigenere"
         cipher_class = StandardVigenere.instance
-        if act == "encrypt"
-          result = cipher_class.encrypt(message, key)
-        else
-          result = cipher_class.decrypt(message, key)
-        end
-      # ...
+      when "auto-key-vigenere"
+        cipher_class = nil
     end
+    if act == "encrypt"
+      result = cipher_class.encrypt(message, key)
+    else
+      result = cipher_class.decrypt(message, key)
+    end
+      # ...
 
     render json: { result: result }
 
