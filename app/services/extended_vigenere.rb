@@ -42,7 +42,12 @@ class ExtendedVigenere
       plaintext += ((char - key_char) % 256).chr
     end
 
-    puts "Plaintext: #{plaintext}"
+    # check if plaintext includes non-printable characters
+    plaintext_base64 = Base64.encode64(plaintext)
+    if plaintext.match?(/[^[:print:]]/)
+      plaintext = "Plaintext contains non-printable characters."
+    end
+    
     return {result: plaintext, result_base64: Base64.encode64(plaintext)}
   end
 end
