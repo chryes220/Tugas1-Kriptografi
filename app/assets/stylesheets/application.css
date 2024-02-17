@@ -45,13 +45,18 @@
   width: 70%;
 }
 
-label {
-  width: 30%;
+.info-text {
+  display: none;
+  font-size: small;
 }
 
 #message,
 #key {
   width: 100%;
+}
+
+label {
+  width: 30%;
 }
 
 form {

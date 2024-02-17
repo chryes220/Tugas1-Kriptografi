@@ -77,3 +77,15 @@ document.querySelector("#inputType").onchange = function changeInput() {
     fileInput.style.display = "none";
   }
 };
+
+document.querySelector("#cipher").onchange = function changeCipher() {
+  var cipher = document.querySelector("#cipher").value;
+  var infoText = document.querySelector("#info-text");
+  if (cipher === "affine") {
+    infoText.style.display = "block";
+    infoText.innerHTML = "For Affine Cipher, please use the format (m,b)";
+  } else {
+    infoText.style.display = "none";
+    infoText.innerHTML = "";
+  }
+};

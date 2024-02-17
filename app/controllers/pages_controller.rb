@@ -23,7 +23,12 @@ class PagesController < ApplicationController
       message = Base64.decode64(message)
     end
     if key_format == "base64"
-      key = Base64.decode64(key)
+      if cipher == "affine"
+        key_arr = key.split(",")
+        key = Base64.decode64(key_arr[0]) + "," + Base64.decode64(key_arr[1])
+      else
+        key = Base64.decode64(key)
+      end
     end
     puts "Message: #{message}"
     puts "Key: #{key}"
@@ -37,6 +42,8 @@ class PagesController < ApplicationController
         cipher_class = ExtendedVigenere.instance
       when "playfair"
         cipher_class = Playfair.instance
+      when "affine"
+        cipher_class = Affine.instance
       # ...
     end
     
