@@ -2,6 +2,7 @@ require_relative "../services/standard_vigenere.rb"
 require_relative "../services/autokey_viginere.rb"
 require_relative "../services/extended_vigenere.rb"
 require_relative "../services/playfair.rb"
+require_relative "../services/hill.rb"
 
 class PagesController < ApplicationController
   def index
@@ -44,9 +45,11 @@ class PagesController < ApplicationController
         cipher_class = Playfair.instance
       when "affine"
         cipher_class = Affine.instance
+      when "hill"
+        cipher_class = Hill.instance
       # ...
     end
-    
+
     if act == "encrypt"
       result = cipher_class.encrypt(message, key)
     else
