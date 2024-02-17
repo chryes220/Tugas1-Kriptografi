@@ -27,7 +27,7 @@ class PagesController < ApplicationController
         cipher_class = Playfair.instance
       # ...
     end
-    puts "halo"
+
     if act == "encrypt"
       result = cipher_class.encrypt(message, key)
     else

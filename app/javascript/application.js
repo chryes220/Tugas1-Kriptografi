@@ -59,6 +59,7 @@ function validateInput(formData){
       validationResult.status = true
     }
   }
+  validationResult.status = true
   return validationResult
 }
 
