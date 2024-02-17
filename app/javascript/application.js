@@ -85,6 +85,13 @@ document.querySelector("#cipher").onchange = function changeCipher() {
   if (cipher === "affine") {
     infoText.style.display = "block";
     infoText.innerHTML = "For Affine Cipher, please use the format (m,b)";
+  } else if (cipher == "transposition") {
+    infoText.style.display = "block";
+    infoText.innerHTML = "For Transposition Cipher, key must be a number";
+  } else if (cipher.startsWith("se-")) {
+    infoText.style.display = "block";
+    infoText.innerHTML =
+      "For Super Encryption, please use the format (key_substitution, key_transposition)";
   } else {
     infoText.style.display = "none";
     infoText.innerHTML = "";
