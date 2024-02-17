@@ -23,13 +23,7 @@ class ExtendedVigenere
       ciphertext += ((char + key_char) % 256).chr
     end
 
-    # check if ciphertext includes non-printable characters
-    ciphertext_base64 = Base64.encode64(ciphertext)
-    if ciphertext.match?(/[^[:print:]]/)
-      ciphertext = "Ciphertext contains non-printable characters."
-    end
-
-    return {result: ciphertext, result_base64: ciphertext_base64}
+    return {result: ciphertext, result_base64: Base64.encode64(ciphertext)}
   end
 
   def decrypt(ciphertext, key)
@@ -40,12 +34,6 @@ class ExtendedVigenere
       char = char.ord
       key_char = key[index % key.length].ord
       plaintext += ((char - key_char) % 256).chr
-    end
-
-    # check if plaintext includes non-printable characters
-    plaintext_base64 = Base64.encode64(plaintext)
-    if plaintext.match?(/[^[:print:]]/)
-      plaintext = "Plaintext contains non-printable characters."
     end
     
     return {result: plaintext, result_base64: Base64.encode64(plaintext)}
