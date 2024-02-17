@@ -12,9 +12,21 @@ class PagesController < ApplicationController
     cipher = params[:cipher]
     message = params[:message]
     key = params[:key]
+    msg_format = params[:group_msg]
+    key_format = params[:group_key]
 
     cipher_class = nil
     result = {}
+
+    # if format is base64, decode message
+    if msg_format == "base64"
+      message = Base64.decode64(message)
+    end
+    if key_format == "base64"
+      key = Base64.decode64(key)
+    end
+    puts "Message: #{message}"
+    puts "Key: #{key}"
 
     case cipher
       when "standard-vigenere"
@@ -27,7 +39,7 @@ class PagesController < ApplicationController
         cipher_class = Playfair.instance
       # ...
     end
-    puts "halo"
+    
     if act == "encrypt"
       result = cipher_class.encrypt(message, key)
     else

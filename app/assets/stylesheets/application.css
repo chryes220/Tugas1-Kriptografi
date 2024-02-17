@@ -1,13 +1,8 @@
 .flex-row {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
-}
-
-.radio{
-  display:block;
 }
 
 .flex-row-center {
@@ -17,6 +12,13 @@
   width: 100%;
 }
 
+.flex-row-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -24,28 +26,35 @@
   width: 100%;
 }
 
-.flex-row-right{
+.flex-col-left {
   display: flex;
-  flex-direction: row;
-  justify-content:flex-end;
-  width: 50%;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.radio {
+  display: block;
 }
 
 .result {
   margin: 3em;
 }
 
+.inputArea {
+  width: 70%;
+}
+
 label {
   width: 30%;
 }
 
-input,
-select,
-textarea {
-  width: 70%;
+#message,
+#key {
+  width: 100%;
 }
 
 form {
   margin: 0 3em;
-  gap: 1em;
+  gap: 1.2em;
 }

@@ -36,44 +36,44 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     });
 });
 
-function validateInput(formData){
-  const validationResult = {status:false,message:""}
-  if(formData.get("cipher")==="playfair"){
+function validateInput(formData) {
+  const validationResult = { status: false, message: "" };
+  if (formData.get("cipher") === "playfair") {
     //pastiin key nya panjangnya 25, tiap karakter berupa karakter alfabet yang unik, dan gak boleh ada J?
-    const key = formData.get("key").toLowerCase()
-    if(key.length!==25){
-      validationResult.message += "Key for Playfair Cipher need at least 25 characters\n"
+    const key = formData.get("key").toLowerCase();
+    if (key.length !== 25) {
+      validationResult.message +=
+        "Key for Playfair Cipher need at least 25 characters\n";
     }
-    if(!(/^[a-z]+$/.test(key))){
-      validationResult.message += "Key must be alphabet\n"
+    if (!/^[a-z]+$/.test(key)) {
+      validationResult.message += "Key must be alphabet\n";
     }
-    if(new Set(key).size !== key.length){
-      validationResult.message += "Each character in key must be unique\n"
+    if (new Set(key).size !== key.length) {
+      validationResult.message += "Each character in key must be unique\n";
     }
-    if(key.indexOf("j") > -1){
-      validationResult.message += "J cannot be included in key\n"
+    if (key.indexOf("j") > -1) {
+      validationResult.message += "J cannot be included in key\n";
     }
 
     //kalau message kosong, berarti lolos tes
-    if(!validationResult.message.length){
-      validationResult.status = true
+    if (!validationResult.message.length) {
+      validationResult.status = true;
     }
   }
-  return validationResult
+  return validationResult;
 }
 
-const inputTypeElement = document.querySelector("#inputType")
-const fileInput = document.querySelector("#fileInput")
-const textInput = document.querySelector("#textInput")
+const inputTypeElement = document.querySelector("#inputType");
+const fileInput = document.querySelector("#fileInput");
+const textInput = document.querySelector("#textInput");
 
-document.querySelector("#inputType").onchange = function changeInput(){
+document.querySelector("#inputType").onchange = function changeInput() {
   //change who to show
-  if(inputTypeElement.value==="fileInput"){
+  if (inputTypeElement.value === "fileInput") {
     textInput.style.display = "none";
     fileInput.style.display = "flex";
-  }
-  else{
+  } else {
     textInput.style.display = "flex";
     fileInput.style.display = "none";
   }
-}
+};
