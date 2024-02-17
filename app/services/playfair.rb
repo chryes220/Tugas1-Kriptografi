@@ -81,27 +81,67 @@ class Playfair
   def decrypt(ciphertext,key)
     puts "Decrypting #{ciphertext} using key #{key}"
 
-    # # Buang karakter non alfabet
-    # ciphertext = ciphertext.gsub(/[^a-zA-Z]/,"")
-    # key = key.gsub(/[^a-zA-Z]/,"")   
+    #ubah key ke lowercase
+    key = key.downcase
+    # Buat matriks kunci
+    for i in 0..4 do
+      for j in 0..4 do
+        @key_matrix[i][j] = key[5*i+j].ord - 97
+      end
+    end
 
-    # # Bila panjang key < ciphertext, tambahkan potongan ciphertext ke key sampai panjangnya sama
-    # if key.length < ciphertext.length
-    #   key << ciphertext[0, ciphertext.length-key.length] 
-    # end
-    
-    # # lakukan dekripsi
-    # plaintext = ""
-    # ciphertext.each_char.with_index do |char,index|
-    #   char = char.downcase
-    #   key_char = key[index].downcase
-    #   # mestinya dah kesanitasi semua di awal
-    #   plaintext += (((char.ord - key_char.ord) % 26) + 97).chr
-    # end
-    # puts "Plaintext: #{plaintext}"
-    # # Lu harus masukin kunci yang sama persis buat decrypt karena mana tau ini cipher kunci plaintextnya bjir
-    # # return hasil
-    # return {result: plaintext, result_base64: Base64.encode64(plaintext)}
+    # Buang karakter non alfabet
+    ciphertext = ciphertext.gsub(/[^a-zA-Z]/,"")
+    # Substitusi 'J' dengan 'i'
+    ciphertext = ciphertext.gsub(/[Jj]/,"i")
+
+    # Buat bigram
+    bigrams = [] # array of string
+    i = 0
+    while i < ciphertext.length
+      if i == ciphertext.length-1  
+        # tinggal sisa 1 huruf
+        bigrams << ciphertext[i].downcase + "x"
+        i += 1
+      elsif ciphertext[i]!=ciphertext[i+1] 
+        bigrams << ciphertext[i..i+1].downcase
+        i += 2
+      else
+        bigrams << ciphertext[i].downcase + "x"
+        i += 1
+      end
+    end
+
+    # lakukan enkripsi
+    plaintext = ""
+    # place bigrams
+    for bigram in bigrams
+      if is_same_row(bigram)
+        # untuk kasus baris yang sama
+        row = get_row(bigram[0])
+        bigram.each_char do |char|
+          plaintext << (@key_matrix[get_row_idx(row)][(get_col_idx(char,row)-1) % 5]+97).chr
+        end
+      elsif is_same_col(bigram)
+        # untuk kasus kolow yang sama
+        col = get_col_idx(bigram[0],get_row(bigram[0]))
+        bigram.each_char do |char|
+          plaintext << (@key_matrix[(get_row_idx(get_row(char))-1) %  5][col]+97).chr     
+        end  
+      else
+        # untuk kasus baris dan kolom berbeda
+        row_1 = get_row(bigram[0])
+        row_2 = get_row(bigram[1])
+        # karakter pertama, yang mana huruf pertama plaintext diganti dengan huruf pada perpotongan baris huruf pertama dengan kolom huruf kedua.
+        plaintext << (@key_matrix[get_row_idx(row_1)][get_col_idx(bigram[1],row_2)]+97).chr
+        # karakter kedua (sisanya), yang mana huruf kedua plaintext diganti dengan huruf pada perpotongan kolom huruf pertama dengan baris huruf kedua.
+        plaintext << (@key_matrix[get_row_idx(row_2)][get_col_idx(bigram[0],row_1)]+97).chr
+      end
+    end
+
+    puts "Plaintext: #{plaintext}"
+    # return hasil
+    return {result: plaintext, result_base64: Base64.encode64(plaintext)}
   end
 
   def is_same_row(bigram)
