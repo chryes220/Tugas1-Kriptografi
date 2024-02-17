@@ -11,11 +11,11 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const form = e.target;
   const formData = new FormData(form);
 
-  //lakukan validasi masukan
-  const validationResult = validateInput(formData)
-  if(!validationResult.status){
-    alert(validationResult.message)
-    return
+  // lakukan validasi masukan
+  const validationResult = validateInput(formData);
+  if (!validationResult.status) {
+    alert(validationResult.message);
+    return;
   }
 
   fetch("/submit", {
@@ -38,9 +38,13 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
 function validateInput(formData) {
   const validationResult = { status: false, message: "" };
-  if (formData.get("cipher") === "playfair") {
+  const cipher = formData.get("cipher");
+  const key = formData.get("key").toLowerCase();
+
+  console.log(cipher, key);
+
+  if (cipher === "playfair") {
     //pastiin key nya panjangnya 25, tiap karakter berupa karakter alfabet yang unik, dan gak boleh ada J?
-    const key = formData.get("key").toLowerCase();
     if (key.length !== 25) {
       validationResult.message +=
         "Key for Playfair Cipher need at least 25 characters\n";
@@ -60,7 +64,47 @@ function validateInput(formData) {
       validationResult.status = true;
     }
   }
-  validationResult.status = true
+
+  // untuk cipher yang 26 huruf, key harus 26 huruf alfabet latin
+  if (cipher === "standard-vigenere" || cipher === "auto-key-vigenere") {
+    // kalau key mengandung karakter selain huruf alfabet, maka tidak valid
+    if (!/^[a-z]+$/.test(key)) {
+      validationResult.message += "Key must be alphabet only\n";
+    } else {
+      validationResult.status = true;
+    }
+  }
+
+  // khusus untuk affine cipher, key harus berupa pasangan angka
+  if (cipher === "affine") {
+    if (!/^\d+,\d+$/.test(key)) {
+      validationResult.message +=
+        "Key must be in format (m,b) where m and b are integers\n";
+    } else {
+      validationResult.status = true;
+    }
+  }
+
+  // khusus untuk transposition cipher, key harus berupa angka
+  if (cipher === "transposition") {
+    if (!/^\d+$/.test(key)) {
+      validationResult.message += "Key must be a number\n";
+    } else {
+      validationResult.status = true;
+    }
+  }
+
+  // untuk cipher yang diawali dengan 'se-', key harus
+  // berupa pasangan string,angka
+  if (cipher.startsWith("se-")) {
+    if (!/^.+,\d+$/.test(key)) {
+      validationResult.message +=
+        "Key must be in format (key_substitution, key_transposition)\n";
+    } else {
+      validationResult.status = true;
+    }
+  }
+
   return validationResult;
 }
 
