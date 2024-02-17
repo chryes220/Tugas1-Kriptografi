@@ -7,7 +7,7 @@
 
   <div class="flex-row">
     <label for="act">Action:</label>
-    <select id="act" name="act">
+    <select class="inputArea" id="act" name="act">
       <option value="encrypt" selected>Encrypt</option>
       <option value="decrypt">Decrypt</option>
     </select>
@@ -15,7 +15,7 @@
   
   <div class="flex-row">
     <label for="cipher">Cipher:</label>
-    <select id="cipher" name="cipher">
+    <select class="inputArea" id="cipher" name="cipher">
       <option value="standard-vigenere" selected>Standard Vigenere</option>
       <option value="auto-key-vigenere">Auto-Key Vigenere</option>
       <option value="extended-vigenere">Extended Vigenere</option>
@@ -26,39 +26,55 @@
       <option value="enigma">Enigma</option>
     </select>
   </div>
+
   <div class="flex-row">
     <label for="inputType">Input Type:</label>
-    <select id="inputType">
+    <select class="inputArea" id="inputType">
       <option value="textInput">Text</option>
       <option value="fileInput">File</option>
     </select>
   </div>
-  <div class="flex-col" id="textInput">
-    <div class="flex-row">
-      <label for="message">Message:</label>
-      <textarea id="message" name="message"></textarea>
-    </div>
-    <%# <div class="flex-row-center">
-      <div class="radio">
-        <input type="radio" id="plain_input" name="input_style" value="plain">
-        <label for="plain_input">Plaintext</label>
-      </div>
-       <div class="radio">
-        <input type="radio" id="hex_input" name="input_style" value="base64">
-        <label for="hex_input">Base64</label>
-      </div>
-    </div> %>
-  </div>
 
   <div class="flex-row" id="fileInput" style="display:none;">
     <label for="file">File:</label>
-    <%# <input type="text"> %>
-    <input type="file" id="file">
+    <input class="inputArea" type="file" id="file">
   </div>
 
-  <div class="flex-row">
-    <label for="key">Key:</label>
-    <input type="text" id="key" name="key">
+  <div class="flex-row" id="textInput">
+    <label for="message">Message:</label>
+    <div class="flex-col-left inputArea">
+      <textarea id="message" name="message"></textarea>
+      <div class="flex-row">
+        <div class="radio">
+          <input type="radio" id="msg-plain" name="group_msg" value="plain" checked>
+          <label for="msg-plain">Plaintext</label>
+        </div>
+        <div class="radio">
+          <input type="radio" id="msg-base64" name="group_msg" value="base64">
+          <label for="msg-base64">Base64</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="flex-col">
+    <div class="flex-row">
+      <label for="key">Key:</label>
+      <div class="flex-col-left inputArea">
+        <input type="text" id="key" name="key">
+        <p class="info-text" id="info-text"></p>
+        <div class="flex-row">
+          <div class="radio">
+            <input type="radio" id="key-plain" name="group_key" value="plain" checked>
+            <label for="key-plain">Plaintext</label>
+          </div>
+          <div class="radio">
+            <input type="radio" id="key-base64" name="group_key" value="base64">
+            <label for="key-base64">Base64</label>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <input type="submit" value="Submit">

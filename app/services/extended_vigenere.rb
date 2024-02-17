@@ -33,5 +33,21 @@ class ExtendedVigenere
   end
 
   def decrypt(ciphertext, key)
+    puts "Decrypting #{ciphertext} using key #{key}"
+
+    plaintext = ""
+    ciphertext.each_char.with_index do |char, index|
+      char = char.ord
+      key_char = key[index % key.length].ord
+      plaintext += ((char - key_char) % 256).chr
+    end
+
+    # check if plaintext includes non-printable characters
+    plaintext_base64 = Base64.encode64(plaintext)
+    if plaintext.match?(/[^[:print:]]/)
+      plaintext = "Plaintext contains non-printable characters."
+    end
+    
+    return {result: plaintext, result_base64: Base64.encode64(plaintext)}
   end
 end
