@@ -106,8 +106,8 @@ function validateInput(formData) {
 
   // untuk hill cipher, key harus pasangan angka dan matrix, setiap elemen matrix jumlahnya harus sama dengan `m`
   if(cipher === "hill"){
-    if(!/^.*\d+ *, *\[[\d\[\] ,]*\].*$/.test(key)){
-      validationResult.message += "Key must be in format `m, matrix`\n"
+    if(!/^.*\d+ *; *\[[\d\[\] ,]*\].*$/.test(key)){
+      validationResult.message += "Key must be in format `m; matrix`\n"
     }
     else{
       validationResult.status = true
@@ -147,7 +147,7 @@ document.querySelector("#cipher").onchange = function changeCipher() {
       "For Super Encryption, please use the format (key_substitution, key_transposition)";
   } else if (cipher === "hill"){
     infoText.style.display = "block";
-    infoText.innerHTML = "For Hill Cipher, please use the format `m, matrix` , e.g: `2,[[1,3],[4,5]]`"
+    infoText.innerHTML = "For Hill Cipher, please use the format `m; matrix` , e.g: `2;[[1,3],[4,5]]`"
   }
   else {
     infoText.style.display = "none";
