@@ -58,7 +58,6 @@ function validateInput(formData) {
     if (key.indexOf("j") > -1) {
       validationResult.message += "J cannot be included in key\n";
     }
-
     //kalau message kosong, berarti lolos tes
     if (!validationResult.message.length) {
       validationResult.status = true;
@@ -105,6 +104,16 @@ function validateInput(formData) {
     }
   }
 
+  // untuk hill cipher, key harus pasangan angka dan matrix, setiap elemen matrix jumlahnya harus sama dengan `m`
+  if(cipher === "hill"){
+    if(!/^.*\d+ *, *\[[\d\[\] ,]*\].*$/.test(key)){
+      validationResult.message += "Key must be in format `m, matrix`\n"
+    }
+    else{
+      validationResult.status = true
+    }
+  }
+
   return validationResult;
 }
 
@@ -136,7 +145,11 @@ document.querySelector("#cipher").onchange = function changeCipher() {
     infoText.style.display = "block";
     infoText.innerHTML =
       "For Super Encryption, please use the format (key_substitution, key_transposition)";
-  } else {
+  } else if (cipher === "hill"){
+    infoText.style.display = "block";
+    infoText.innerHTML = "For Hill Cipher, please use the format `m, matrix` , e.g: `2,[[1,3],[4,5]]`"
+  }
+  else {
     infoText.style.display = "none";
     infoText.innerHTML = "";
   }
