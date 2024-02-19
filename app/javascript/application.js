@@ -65,7 +65,7 @@ function validateInput(formData) {
   }
 
   // untuk cipher yang 26 huruf, key harus 26 huruf alfabet latin
-  if (cipher === "standard-vigenere" || cipher === "auto-key-vigenere") {
+  else if (cipher === "standard-vigenere" || cipher === "auto-key-vigenere") {
     // kalau key mengandung karakter selain huruf alfabet, maka tidak valid
     if (!/^[a-z]+$/.test(key)) {
       validationResult.message += "Key must be alphabet only\n";
@@ -75,7 +75,7 @@ function validateInput(formData) {
   }
 
   // khusus untuk affine cipher, key harus berupa pasangan angka
-  if (cipher === "affine") {
+  else if (cipher === "affine") {
     if (!/^\d+,\d+$/.test(key)) {
       validationResult.message +=
         "Key must be in format (m,b) where m and b are integers\n";
@@ -85,7 +85,7 @@ function validateInput(formData) {
   }
 
   // khusus untuk transposition cipher, key harus berupa angka
-  if (cipher === "transposition") {
+  else if (cipher === "transposition") {
     if (!/^\d+$/.test(key)) {
       validationResult.message += "Key must be a number\n";
     } else {
@@ -95,7 +95,7 @@ function validateInput(formData) {
 
   // untuk cipher yang diawali dengan 'se-', key harus
   // berupa pasangan string,angka
-  if (cipher.startsWith("se-")) {
+  else if (cipher.startsWith("se-")) {
     if (!/^.+,\d+$/.test(key)) {
       validationResult.message +=
         "Key must be in format (key_substitution, key_transposition)\n";
@@ -105,13 +105,16 @@ function validateInput(formData) {
   }
 
   // untuk hill cipher, key harus pasangan angka dan matrix, setiap elemen matrix jumlahnya harus sama dengan `m`
-  if(cipher === "hill"){
+  else if(cipher === "hill"){
     if(!/^.*\d+ *; *\[[\d\[\] ,]*\].*$/.test(key)){
       validationResult.message += "Key must be in format `m; matrix`\n"
     }
     else{
       validationResult.status = true
     }
+  }
+  else{
+    validationResult.status = true
   }
 
   return validationResult;

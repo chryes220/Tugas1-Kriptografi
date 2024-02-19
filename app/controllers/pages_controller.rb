@@ -23,7 +23,13 @@ class PagesController < ApplicationController
 
     # if input is file, parse it first
     if input_type == "fileInput"
-      message = params[:file].tempfile.read()
+      if cipher=="extended-vigenere"
+        # Extended Viginere dibasa as binary
+        message = IO.binread(params[:file].tempfile)
+      else
+        # Selain itu dibaca as text
+        message = params[:file].tempfile.read()
+      end
     end
 
     # if format is base64, decode message
