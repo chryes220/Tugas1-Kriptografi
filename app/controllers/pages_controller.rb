@@ -3,6 +3,7 @@ require_relative "../services/autokey_viginere.rb"
 require_relative "../services/extended_vigenere.rb"
 require_relative "../services/playfair.rb"
 require_relative "../services/hill.rb"
+require_relative "../services/enigma.rb"
 
 class PagesController < ApplicationController
   def index
@@ -52,7 +53,8 @@ class PagesController < ApplicationController
           cipher_class = Transposition.instance
         when "hill"
           cipher_class = Hill.instance
-        # ...
+        when "enigma"
+          cipher_class = Enigma.instance
       end
       
       if act == "encrypt"
