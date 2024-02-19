@@ -16,9 +16,15 @@ class PagesController < ApplicationController
     key = params[:key]
     msg_format = params[:group_msg]
     key_format = params[:group_key]
+    input_type = params[:input_type]
 
     cipher_class = nil
     result = {}
+
+    # if input is file, parse it first
+    if input_type == "fileInput"
+      message = params[:file].tempfile.read()
+    end
 
     # if format is base64, decode message
     if msg_format == "base64"
