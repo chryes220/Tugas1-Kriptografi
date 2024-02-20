@@ -113,6 +113,17 @@ function validateInput(formData) {
       validationResult.status = true
     }
   }
+  
+
+  // untuk enigma, input key nya cuma boleh ada alfabet, semikolon, atau spasi
+  else if(cipher ==="enigma"){
+    if(!/^[A-Za-z; ]+$/.test(key)){
+      validationResult.message += "Key must be in format `KEYSET_1;KEYSET_2;KEYSET_3` in which KEYSET_N only contains alphabet\n"
+    }
+    else{
+      validationResult.status = true
+    }
+  }
   else{
     validationResult.status = true
   }
@@ -151,6 +162,9 @@ document.querySelector("#cipher").onchange = function changeCipher() {
   } else if (cipher === "hill"){
     infoText.style.display = "block";
     infoText.innerHTML = "For Hill Cipher, please use the format `m; matrix` , e.g: `2;[[1,3],[4,5]]`"
+  } else if(cipher === "enigma"){
+    infoText.style.display = "block";
+    infoText.innerHTML = "For Enigma Cipher, please use formaat `KEYSET_1;KEYSET_2;KEYSET_3`, e.g: `ABF..E;FRE..G;RHF..P`"
   }
   else {
     infoText.style.display = "none";
