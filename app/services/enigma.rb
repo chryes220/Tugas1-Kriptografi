@@ -5,59 +5,57 @@ class Enigma
   include Ciphers
   include Singleton
 
-  # @key_matrix 
-  # @m
+  @rotor_1
+  @rotor_2
+  @rotor_3
+  @pos_1
+  @pos_2
+  @pos_3
 
   def initialize
     puts "Enigma Initialized"
   end
 
   def encrypt(plaintext,key)
-    # # parse key
-    # temp_token = key.split(';')
-    # # get m (dimension)
-    # @m = temp_token[0].to_i
-    # # parse key matrix
-    # parse_key_matrix(temp_token[-1])
+    # parse input
+    keysets, configurations = key.gsub(/ /,"").split(";")
+    # parse keysets
+    @rotor_1, @rotor_2, @rotor_3 = keysets.downcase.split(',')
+    # parse starting positions
+    @pos_1, @pos_2, @pos_3 = configurations.split(",").map{|e| e.to_i}
 
-    # puts "Encrypting #{plaintext} using key `#{key}`"
+    puts "Encrypting #{plaintext} using configuration `#{keysets}` and starting positions #{configurations}"
 
-    # # Buang karakter non alfabet
-    # plaintext = plaintext.gsub(/[^a-zA-Z]/,"")
-    # # konversi ke huruf kecil
-    # plaintext = plaintext.downcase
-    # # lakukan enkripsi
-    # ciphertext = ""
-    # i = 0
-    # plaintext_array = Array.new(@m,0)
-    # while i < plaintext.length
-    #   # buat array berisi plaintext dalam nilai ASCII relatif terhadap 'a'
-    #   if i+@m > plaintext.length
-    #     offset = plaintext.length-i
-    #     for j in 0...offset do
-    #       plaintext_array[j] = (plaintext[j+i].ord)-97
-    #     end
-    #     # kurang karakter, kasih padding
-    #     for j in offset...@m do
-    #       plaintext_array[j] = 0
-    #     end
-    #   else
-    #     for j in 0...@m do
-    #       plaintext_array[j] = (plaintext[j+i].ord)-97
-    #     end
-    #   end
-    #   # konversi array ke matriks kolom
-    #   plaintext_column_vector = Matrix.column_vector(plaintext_array)
-    #   # kalikan dengan matriks kunci dengan rumus C = KP
-    #   result_matrix = @key_matrix * plaintext_column_vector
-    #   # konversikan ke ciphertext
-    #   ciphertext << result_matrix.to_a.flatten.map { |element| ((element % 26) + 97).chr }.join
-    #   i += @m
-    # end
+    # Buang karakter non alfabet di plaintext
+    plaintext = plaintext.gsub(/[^a-zA-Z]/,"")
+    # konversi ke huruf kecil
+    plaintext = plaintext.downcase
 
-    # puts "Ciphertext: #{ciphertext}"
-    # # # return hasil
-    # return {result: ciphertext, result_base64: Base64.encode64(ciphertext)}
+    # inisialisasi
+    # lakukan enkripsi
+    ciphertext = ""
+
+    plaintext.each_char do |char|
+      temp_1 = @rotor_1[(char.ord()-97 + @pos_1) % 26]
+      temp_2 = @rotor_2[(temp_1.ord()-97 + @pos_2) % 26]
+      ciphertext << @rotor_3[(temp_2.ord()-97 + @pos_3) % 26]
+
+      # geser posisi
+      # geser rotor 3
+      @pos_3 = (@pos_3+1)%26
+      if @pos_3 == 0
+        # geser rotor 2 bila rotor 3 dah muter 1 siklus (26 kali)
+        @pos_2 = (@pos_2+1)%26
+        if @pos_2 ==0
+          # geser rotor 1 bila rotor 2 dah muter 1 siklus (26 kali)
+          @pos_1 = (@pos_1+1) % 26
+        end
+      end
+    end
+
+    puts "Ciphertext: #{ciphertext}"
+    # # return hasil
+    return {result: ciphertext, result_base64: Base64.encode64(ciphertext)}
   end
 
   def decrypt(ciphertext,key)
