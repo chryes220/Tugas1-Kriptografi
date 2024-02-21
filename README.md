@@ -24,14 +24,20 @@ kolom)
 8. Enigma cipher
 
 # Requirement dan Instalasi
+- Website ini ditulis dalam bahasa `Ruby` yang bisa diunduh pada tautan [berikut](https://www.ruby-lang.org/en/downloads/). Pada saat proses pengembangan digunakan `Ruby` versi **3.2.3**. 
+- Untuk mempermudah pengembangan, digunakan _framework_ berupa `Ruby on Rails` yang dapat diunduh dengan perintah berikut:
+```sh
+gem install rails
+```
+Pada proses pengembangan aplikasi ini, digunakan versi terbaru `Ruby on Rails` yakni **7.1.3**. 
 
 # Cara Penggunaan
 Jalankan perintah berikut pada folder `root` _project_ ini:
-``sh
+```sh
 bin\rails server
-``
+```
 
 Khusus untuk sistem operasi `Windows`, perlu untuk memanggil program `ruby` sebelum menjalankan _script_ seperti berikut:
-``sh
+```sh
 ruby bin\rails server
-``
+```
