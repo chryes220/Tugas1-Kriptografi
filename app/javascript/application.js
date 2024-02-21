@@ -3,7 +3,7 @@ import "@hotwired/turbo-rails";
 import "controllers";
 
 // reset localStorage
-localStorage.setItem("download-filename",null)
+localStorage.setItem("download-filename", null);
 
 var csrfToken = document
   .querySelector('meta[name="csrf-token"]')
@@ -34,7 +34,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       document.getElementById("result-base64-text").innerText =
         data.result_base64;
       //simpan filename di localstorage
-      localStorage.setItem("download-filename",data.file_name)
+      localStorage.setItem("download-filename", data.file_name);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -42,12 +42,12 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 });
 
 // download button
-document.querySelector("#btn-download").onclick = async (e) =>{
-  e.preventDefault()
+document.querySelector("#btn-download").onclick = async (e) => {
+  e.preventDefault();
   // params[:file_name]
   // masukkan params file_name
-  const formData = new FormData()
-  formData.append("file_name",localStorage.getItem("download-filename"))
+  const formData = new FormData();
+  formData.append("file_name", localStorage.getItem("download-filename"));
 
   fetch(`/download`, {
     method: "POST",
@@ -59,38 +59,21 @@ document.querySelector("#btn-download").onclick = async (e) =>{
     .then((response) => response.blob())
     .then((blob) => {
       //unduh file
-      const url = URL.createObjectURL(blob)
+      const url = URL.createObjectURL(blob);
       // bikin dummy anchor link
-      const a = document.createElement("a")
-      a.href = url
+      const a = document.createElement("a");
+      a.href = url;
       // rename file
-      a.download = localStorage.getItem("download-filename")
+      a.download = localStorage.getItem("download-filename");
       // unduh file
-      a.click()
+      a.click();
       // remove url
-      URL.revokeObjectURL(url)
+      URL.revokeObjectURL(url);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-}
-
-// function savefile(){
-//   if(model!=null){
-//       //bikin blob
-//       const blob = new Blob([JSON.stringify(model.serialize())],{
-//           type:"application/json"
-//       })
-//       //bikin url
-//       const url = URL.createObjectURL(blob)
-//       //bikin dummy anchor link
-//       const a = document.createElement("a")
-//       a.href = url
-//       const newFilenameprefix = filenameText.innerText.replace(/(Nama File: |.json)/g,"")
-//       a.download = `${newFilenameprefix}_${new Date().toISOString()}.json`
-//       a.click()
-//   }
-// }
+};
 
 function validateInput(formData) {
   const validationResult = { status: false, message: "" };
