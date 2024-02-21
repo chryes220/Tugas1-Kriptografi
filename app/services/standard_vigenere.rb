@@ -10,8 +10,6 @@ class StandardVigenere
   end
 
   def encrypt(plaintext, key)
-    puts "Encrypting #{plaintext} using key #{key}"
-
     # remove non-alphabetic characters
     plaintext = plaintext.gsub(/[^a-zA-Z]/, "")
 
@@ -32,14 +30,10 @@ class StandardVigenere
       end
     end
 
-    puts "Ciphertext: #{ciphertext}"
-
     return {result: ciphertext, result_base64: Base64.encode64(ciphertext)} 
   end
 
   def decrypt(ciphertext, key)
-    puts "Decrypting #{ciphertext} using key #{key}"
-
     # remove non-alphabetic characters
     ciphertext = ciphertext.gsub(/[^a-zA-Z]/, "")
 
@@ -59,8 +53,7 @@ class StandardVigenere
         plaintext += char
       end
     end
-
-    puts "Plaintext: #{plaintext}"
+    
     return {result: plaintext, result_base64: Base64.encode64(plaintext)}
   end
 end

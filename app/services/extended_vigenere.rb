@@ -10,8 +10,6 @@ class ExtendedVigenere
   end
 
   def encrypt(plaintext, key)
-    puts "Encrypting #{plaintext} using key #{key}"
-
     if key.length < plaintext.length
       key = key * (plaintext.length / key.length + 1)
     end
@@ -27,8 +25,6 @@ class ExtendedVigenere
   end
 
   def decrypt(ciphertext, key)
-    puts "Decrypting #{ciphertext} using key #{key}"
-
     plaintext = ""
     ciphertext.each_char.with_index do |char, index|
       char = char.ord
