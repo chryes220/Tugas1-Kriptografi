@@ -18,6 +18,8 @@ class PagesController < ApplicationController
     key_format = params[:group_key]
     input_type = params[:input_type]
 
+    puts "input_type: #{input_type}"
+
     cipher_class = nil
     result = {}
     result[:file_name] = "result.txt"
@@ -83,7 +85,7 @@ class PagesController < ApplicationController
 
           # remove tailing unprintable characters if input is text
           if input_type == "textInput"
-            result[:result] = result[:result].gsub(/[^[:print:]]+$/, "")
+            result[:result] = result[:result].tr('^ -~', '')
             result[:result_base64] = Base64.encode64(result[:result])
           end
         end
@@ -95,7 +97,7 @@ class PagesController < ApplicationController
 
           # remove tailing unprintable characters if input is text
           if input_type == "textInput"
-            result[:result] = result[:result].gsub(/[^[:print:]]+$/, "")
+            result[:result] = result[:result].tr('^ -~', '')
             result[:result_base64] = Base64.encode64(result[:result])
           end
         end
