@@ -26,3 +26,12 @@ kolom)
 # Requirement dan Instalasi
 
 # Cara Penggunaan
+Jalankan perintah berikut pada folder `root` _project_ ini:
+``sh
+bin\rails server
+``
+
+Khusus untuk sistem operasi `Windows`, perlu untuk memanggil program `ruby` sebelum menjalankan _script_ seperti berikut:
+``sh
+ruby bin\rails server
+``
