@@ -2,6 +2,9 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 
+// reset localStorage
+localStorage.setItem("download-filename",null)
+
 var csrfToken = document
   .querySelector('meta[name="csrf-token"]')
   .getAttribute("content");
@@ -31,7 +34,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       document.getElementById("result-base64-text").innerText =
         data.result_base64;
       //simpan filename di localstorage
-      console.log(data)
       localStorage.setItem("download-filename",data.file_name)
     })
     .catch((error) => {
@@ -40,13 +42,12 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 });
 
 // download button
-document.querySelector("#download").onclick = async (e) =>{
+document.querySelector("#btn-download").onclick = async (e) =>{
   e.preventDefault()
   // params[:file_name]
   // masukkan params file_name
   const formData = new FormData()
   formData.append("file_name",localStorage.getItem("download-filename"))
-  console.log(localStorage.getItem("download-filename"))
 
   fetch(`/download`, {
     method: "POST",
@@ -55,24 +56,46 @@ document.querySelector("#download").onclick = async (e) =>{
     },
     body: formData,
   })
-    .then((response) => console.log(response))
-    // .then((data) => {
-    //   console.log(data)
-    //   // document.getElementById("result-text").innerText = data.result;
-    //   // document.getElementById("result-base64-text").innerText =
-    //   //   data.result_base64;
-    // })
+    .then((response) => response.blob())
+    .then((blob) => {
+      //unduh file
+      const url = URL.createObjectURL(blob)
+      // bikin dummy anchor link
+      const a = document.createElement("a")
+      a.href = url
+      // rename file
+      a.download = localStorage.getItem("download-filename")
+      // unduh file
+      a.click()
+      // remove url
+      URL.revokeObjectURL(url)
+    })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
 
+// function savefile(){
+//   if(model!=null){
+//       //bikin blob
+//       const blob = new Blob([JSON.stringify(model.serialize())],{
+//           type:"application/json"
+//       })
+//       //bikin url
+//       const url = URL.createObjectURL(blob)
+//       //bikin dummy anchor link
+//       const a = document.createElement("a")
+//       a.href = url
+//       const newFilenameprefix = filenameText.innerText.replace(/(Nama File: |.json)/g,"")
+//       a.download = `${newFilenameprefix}_${new Date().toISOString()}.json`
+//       a.click()
+//   }
+// }
+
 function validateInput(formData) {
   const validationResult = { status: false, message: "" };
   const cipher = formData.get("cipher");
   const key = formData.get("key").toLowerCase();
-
-  console.log(cipher, key);
 
   if (cipher === "playfair") {
     //pastiin key nya panjangnya 25, tiap karakter berupa karakter alfabet yang unik, dan gak boleh ada J?
