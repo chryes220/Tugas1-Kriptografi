@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   root "pages#index"
   get "/index", to: "pages#index"
   post "/submit", to: "pages#submit"
-  get "/download", to: "downloads#show"
+  post "/download", to: "downloads#show"
 end

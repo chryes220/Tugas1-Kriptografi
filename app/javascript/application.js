@@ -30,11 +30,42 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       document.getElementById("result-text").innerText = data.result;
       document.getElementById("result-base64-text").innerText =
         data.result_base64;
+      //simpan filename di localstorage
+      console.log(data)
+      localStorage.setItem("download-filename",data.file_name)
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 });
+
+// download button
+document.querySelector("#download").onclick = async (e) =>{
+  e.preventDefault()
+  // params[:file_name]
+  // masukkan params file_name
+  const formData = new FormData()
+  formData.append("file_name",localStorage.getItem("download-filename"))
+  console.log(localStorage.getItem("download-filename"))
+
+  fetch(`/download`, {
+    method: "POST",
+    headers: {
+      "X-CSRF-Token": csrfToken,
+    },
+    body: formData,
+  })
+    .then((response) => console.log(response))
+    // .then((data) => {
+    //   console.log(data)
+    //   // document.getElementById("result-text").innerText = data.result;
+    //   // document.getElementById("result-base64-text").innerText =
+    //   //   data.result_base64;
+    // })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 function validateInput(formData) {
   const validationResult = { status: false, message: "" };
