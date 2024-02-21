@@ -105,39 +105,37 @@ function validateInput(formData) {
   }
 
   // untuk hill cipher, key harus pasangan angka dan matrix, setiap elemen matrix jumlahnya harus sama dengan `m`
-  else if(cipher === "hill"){
-    if(!/^.*\d+ *; *\[[\d\[\] ,]*\].*$/.test(key)){
-      validationResult.message += "Key must be in format `m; matrix`\n"
-    }
-    else{
-      validationResult.status = true
+  else if (cipher === "hill") {
+    if (!/^.*\d+ *; *\[[\d\[\] ,]*\].*$/.test(key)) {
+      validationResult.message += "Key must be in format `m; matrix`\n";
+    } else {
+      validationResult.status = true;
     }
   }
-  
 
   // untuk enigma, input key nya cuma boleh ada alfabet, semikolon, atau spasi, serta konfigurasi awalnya hanya boleh angka
-  else if(cipher ==="enigma"){
+  else if (cipher === "enigma") {
     // pisahkan untuk validasi keyset dan konfigurasi
-    const [keysets, positions] = key.split(";")
+    const [keysets, positions] = key.split(";");
     // cek secara umum
-    if(!/^[A-Za-z0-9;, ]+$/.test(key)){
-      validationResult.message += "Key must be in format `KEYSET_1,KEYSET_2,KEYSET_3;POS_1,POS_2,POS_3` \n"
+    if (!/^[A-Za-z0-9;, ]+$/.test(key)) {
+      validationResult.message +=
+        "Key must be in format `KEYSET_1,KEYSET_2,KEYSET_3;POS_1,POS_2,POS_3` \n";
     }
     //cek keyset
-    if(!/^[A-Za-z, ]+$/.test(keysets)){
-      validationResult.message += "KEYSET can only contains alphabet\n"
+    if (!/^[A-Za-z, ]+$/.test(keysets)) {
+      validationResult.message += "KEYSET can only contains alphabet\n";
     }
     //cek konfigurasi
-    if(!/^[0-9, ]+$/.test(positions)){
-      validationResult.message += "POS can only contains number\n"
+    if (!/^[0-9, ]+$/.test(positions)) {
+      validationResult.message += "POS can only contains number\n";
     }
     // kalau message kosong, berarti aman
-    if(validationResult.message.length===0){
-      validationResult.status = true
+    if (validationResult.message.length === 0) {
+      validationResult.status = true;
     }
-  }
-  else{
-    validationResult.status = true
+  } else {
+    validationResult.status = true;
   }
 
   return validationResult;
@@ -171,14 +169,15 @@ document.querySelector("#cipher").onchange = function changeCipher() {
     infoText.style.display = "block";
     infoText.innerHTML =
       "For Super Encryption, please use the format (key_substitution, key_transposition)";
-  } else if (cipher === "hill"){
+  } else if (cipher === "hill") {
     infoText.style.display = "block";
-    infoText.innerHTML = "For Hill Cipher, please use the format `m; matrix` , e.g: `2;[[1,3],[4,5]]`"
-  } else if(cipher === "enigma"){
+    infoText.innerHTML =
+      "For Hill Cipher, please use the format `m; matrix` , e.g: `2;[[1,3],[4,5]]`";
+  } else if (cipher === "enigma") {
     infoText.style.display = "block";
-    infoText.innerHTML = "For Enigma Cipher, please use formaat `KEYSET_1,KEYSET_2,KEYSET_3;POS_1,POS_2,POS_3`, e.g: `ABF..E,FRE..G,RHF..P;0,1,3`"
-  }
-  else {
+    infoText.innerHTML =
+      "For Enigma Cipher, please use formaat `KEYSET_1,KEYSET_2,KEYSET_3;POS_1,POS_2,POS_3`, e.g: `ABF..E,FRE..G,RHF..P;0,1,3`";
+  } else {
     infoText.style.display = "none";
     infoText.innerHTML = "";
   }

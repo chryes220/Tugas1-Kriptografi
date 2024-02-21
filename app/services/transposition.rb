@@ -13,7 +13,6 @@ class Transposition
 
   def encrypt(plaintext, key)
     # assuming key is a number which represents the number of columns
-    puts "Encrypting #{plaintext} using key #{key}"
 
     key = key.to_i
     padding = "abcdefghijklmnopqrstuvwxyz"
@@ -21,8 +20,6 @@ class Transposition
     if plaintext.length % key != 0
       plaintext += padding[0..(key - plaintext.length % key - 1)]
     end
-
-    puts "Padded plaintext: #{plaintext}"
 
     # for 0..key-1, create a string of characters from plaintext
     # with an interval of key
@@ -39,8 +36,6 @@ class Transposition
   end
 
   def decrypt(ciphertext, key)
-    puts "Decrypting #{ciphertext} using key #{key}"
-
     key = key.to_i
     padding = "abcdefghijklmnopqrstuvwxyz"
     blocks = ciphertext.length / key
