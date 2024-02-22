@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 
     cipher_class = nil
     result = {}
-    result[:file_name] = "result.txt"
+    file_name = "result.txt"
 
     is_cipher_256 = if cipher == "extended-vigenere" || cipher.start_with?("se-") || cipher == "transposition" then true else false end
 
@@ -126,10 +126,24 @@ class PagesController < ApplicationController
       # create a link to download the file
       result[:result] = "File #{file_name} has been created. Please download the file by clicking the button below."
       result[:result_base64] = "Base64 is not shown."
-      result[:file_name] = file_name
-    elsif result[:result].match?(/[^[:print:]]/) # message is text
-      result[:result] = "Result contains non-printable characters."
+    else
+      if result[:result].match?(/[^[:print:]]/) # message is text
+        result[:result] = "Result contains non-printable characters."
+      end
+
+      # create a txt file with the result
+      file_path = Rails.root.join('tmp', file_name)
+      File.open(file_path, "w") do |f|
+        f << "Unicode:\n"
+        f << result[:result]
+        f << "\n\nBase64:\n"
+        f << result[:result_base64]
+      end
+
+      
     end
+
+    result[:file_name] = file_name
     
     render json: result
     return
