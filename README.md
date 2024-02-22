@@ -32,10 +32,7 @@ gem install rails
 Pada proses pengembangan aplikasi ini, digunakan versi terbaru `Ruby on Rails` yakni **7.1.3**. 
 
 # Cara Penggunaan
-Jalankan perintah berikut pada folder `root` _project_ ini:
-```sh
-bin\rails server
-```
+**DISCLAIMER**: Program Ini hanya bisa dijalankan pada sistem operasi **Windows** berdasarkan pengujian yang kami lakukan.
 
 Khusus untuk sistem operasi `Windows`, perlu untuk memanggil program `ruby` sebelum menjalankan _script_ seperti berikut:
 ```sh
