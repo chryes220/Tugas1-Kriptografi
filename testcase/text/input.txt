@@ -1,0 +1,11 @@
+INPUT_TEXT= "Somewhere Over The Rainbow"
+
+KEY_STANDARD_VIGENERE= "wayuphigh"
+KEY_AUTO_KEY_VIGENERE= "wayuphigh"
+KEY_EXTENDED_VIGENERE= "way up high"
+KEY_PLAYFAIR= "abcdefghiklmnopqrstuvwxyz”
+KEY_AFFINE="7,5"
+KEY_HILL="3;[[4,1,7],[2,5,2],[7,9,6]]"
+KEY_TRANSPOSITION="5"
+KEY_SUPER_ENCRYPTION="way up high,5"
+KEY_ENIGMA="cjwtxlhugrksdaiyvozbemnpqf,rxvjdtnagycqhelwbzmfksiupo,guyievcnxfalopwrtjzbmdkqhs;4,22,18"

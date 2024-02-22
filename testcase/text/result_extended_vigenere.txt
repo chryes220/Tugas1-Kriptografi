@@ -1,0 +1,5 @@
+Unicode:
+Result contains non-printable characters.
+
+Base64:
+ytDmhezYhdrOh7ftxutAydiFiLvI0eXD6Jc=
